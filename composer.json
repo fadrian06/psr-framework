@@ -1,4 +1,5 @@
 {
+  "$schema": "https://getcomposer.org/schema.json",
   "name": "faslatam/psr-framework",
   "require": {
     "php": ">=8.3"
