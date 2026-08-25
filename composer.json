@@ -1,0 +1,7 @@
+{
+  "name": "faslatam/psr-framework",
+  "require": {
+    "php": ">=8.3"
+  },
+  "version": "0.0.0"
+}
