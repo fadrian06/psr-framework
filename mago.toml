@@ -1,0 +1,5 @@
+#:schema https://mago.carthage.software/1.49.0/schema.json
+
+[source]
+paths = ["src"]
+includes = ["vendor"]

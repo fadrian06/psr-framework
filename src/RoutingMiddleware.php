@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Faslatam\PsrFramework;
 
-use Faslatam\PsrFramework\Router;
 use NoDiscard;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\ResponseInterface;

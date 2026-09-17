@@ -15,6 +15,7 @@
     "psr/http-server-middleware": "^1.0"
   },
   "require-dev": {
+    "carthage-software/mago": "^1.49",
     "guzzlehttp/psr7": "^3.1",
     "phpunit/phpunit": "^12.5"
   },
