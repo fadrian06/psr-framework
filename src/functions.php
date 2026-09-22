@@ -8,36 +8,52 @@ use Psr\Http\Message\ResponseInterface;
 
 function getenv(string $name): null|int|float|string|bool
 {
-  $env = $_ENV[$name] ?? null;
-
-  if ($filteredVar = filter_var($env, FILTER_VALIDATE_BOOL)) {
-    return $filteredVar;
+  if (!array_key_exists($name, $_ENV)) {
+    return null;
   }
 
-  if ($filteredVar = filter_var($env, FILTER_VALIDATE_INT)) {
-    return $filteredVar;
-  }
+  $env = $_ENV[$name];
 
-  if ($filteredVar = filter_var($env, FILTER_VALIDATE_FLOAT)) {
-    return $filteredVar;
-  }
-
-  if (is_string($env)) {
+  if (is_bool($env)) {
     return $env;
   }
 
-  return null;
+  static $filters = [
+    FILTER_VALIDATE_INT,
+    FILTER_VALIDATE_FLOAT,
+    FILTER_VALIDATE_BOOL,
+  ];
+
+  foreach ($filters as $filter) {
+    $filteredVar = filter_var($env, $filter, FILTER_NULL_ON_FAILURE);
+
+    if ($filteredVar !== null) {
+      if (is_int($filteredVar)) {
+        return $filteredVar;
+      }
+
+      if (is_float($filteredVar)) {
+        return $filteredVar;
+      }
+
+      if (is_bool($filteredVar)) {
+        return $filteredVar;
+      }
+    }
+  }
+
+  return $env;
 }
 
-function sendResponse(ResponseInterface $response): void
+function send_response(ResponseInterface $response): void
 {
   http_response_code($response->getStatusCode());
 
   foreach ($response->getHeaders() as $name => $values) {
     foreach ($values as $value) {
-      header("$name: $value");
+      header("{$name}: {$value}");
     }
   }
 
-  echo $response->getBody();
+  echo (string) $response->getBody();
 }
